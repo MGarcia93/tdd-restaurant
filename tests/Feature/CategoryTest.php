@@ -59,7 +59,7 @@ class CategoryTest extends TestCase
         $response = $this->get("/api/category/{$category->id}");
         $response->assertStatus(200);
         $response = $this->deleteJson("/api/category/{$category->id}");
-        $response->assertStatus(200);
+        $response->assertStatus(204);
         $this->assertDatabaseMissing('categories', [
             "id" => $category->id
         ]);
