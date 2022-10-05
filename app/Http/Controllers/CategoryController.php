@@ -45,19 +45,27 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        //
+        return response()->json(Category::findOrFail($id));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Category $category)
     {
-        //
+        $request->validate([
+            "name" => "required|unique:categories,id"
+        ]);
+        $category->name = $request->name;
+        $category->save();
+        return response()->json([
+            "message" => 'updated',
+            "data" => $category
+        ]);
     }
 
     /**

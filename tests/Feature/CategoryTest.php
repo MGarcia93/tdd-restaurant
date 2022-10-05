@@ -43,6 +43,10 @@ class CategoryTest extends TestCase
         $category->name = "Update testing";
         $response = $this->putJson("/api/category/{$category->id}", ["name" => $category->name]);
         $response->assertStatus(200);
+        $response->assertJson([
+            "message" => 'updated',
+            "data" => $category->toArray()
+        ]);
         $this->assertDatabaseHas('categories', [
             "id" => $category->id,
             "name" => $category->name
