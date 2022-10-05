@@ -28,13 +28,12 @@ class CategoryTest extends TestCase
     }
     public function test_canGetAllCategories()
     {
-        $categories = Category::all();
+        $this->refreshTestDatabase();
+        Category::factory(10)->create();
         $response = $this->getJson('/api/category');
 
         $response->assertStatus(200);
-        $response->assertJson([
-            "categories" => compact('categories')
-        ]);
+        $response->assertJsonCount(Category::count());
     }
     public function test_canUpdateCategory()
     {
