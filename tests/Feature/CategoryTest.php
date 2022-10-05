@@ -20,13 +20,15 @@ class CategoryTest extends TestCase
 
     public function test_canCreateACategory()
     {
+        $this->refreshTestDatabase();
         $data = [
             "name" => $this->faker->sentence()
         ];
         $response = $this->post('/api/category', $data);
         $response->assertStatus(201);
+        $this->assertDatabaseCount('categories', 1);
     }
-    public function test_canGetAllCategories()
+    public function test_getAllCategories()
     {
         $this->refreshTestDatabase();
         Category::factory(10)->create();
